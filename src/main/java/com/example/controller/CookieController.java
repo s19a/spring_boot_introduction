@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,4 +19,7 @@ public class CookieController {
         res.addCookie(new Cookie("test_cookie", value));
         return "保存しました";
     }
+	public String getCookie(@CookieValue("test_cookie")Cookie cookie) {
+		return "cookieValue: " + cookie.getValue();
+	}
 }

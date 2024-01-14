@@ -36,4 +36,11 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         return "employee/data";
     }
+    @GetMapping("/searchByName/{name}")
+    public String searchEmployee(@PathVariable String name, Model model) {
+        List<Employee> employees = this.employeeService.findByName(name);
+        model.addAttribute("employees", employees);
+        // データの全件取得時に作成したテンプレートファイルを流用します。
+        return "employee/list";
+    }
 }

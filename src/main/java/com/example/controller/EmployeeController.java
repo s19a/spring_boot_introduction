@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Employee;
 import com.example.service.EmployeeService;
@@ -42,5 +43,22 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         // データの全件取得時に作成したテンプレートファイルを流用します。
         return "employee/list";
+    }
+    @GetMapping("/create")
+    public String addEmployee(@RequestParam("name") String name, @RequestParam("department") String department) {
+        this.employeeService.insert(name, department);
+        return "redirect:/employee/list";
+    }
+    @GetMapping("/update/{employeeId}")
+    public String editEmployee(@PathVariable Integer employeeId
+                             , @RequestParam("name") String name
+                             , @RequestParam("department") String department) {
+        this.employeeService.update(employeeId, name, department);
+        return "redirect:/employee/list";
+    }
+    @GetMapping("/delete/{employeeId}")
+    public String deleteEmployee(@PathVariable Integer employeeId) {
+        this.employeeService.delete(employeeId);
+        return "redirect:/employee/list";
     }
 }
